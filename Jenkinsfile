@@ -29,7 +29,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'webserver-ssh', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'user')])  {
                     script {
-                        sh 'ssh deploy@52.90.0.221 "docker pull kobaka123/train-schedule:latest; docker run --restart-always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
+                        sh 'ssh deploy@52.90.0.221 -i /home/cloud_user/.ssh/id_rsa "docker pull kobaka123/train-schedule:latest; docker run --restart-always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
                     }
                 }
             }
