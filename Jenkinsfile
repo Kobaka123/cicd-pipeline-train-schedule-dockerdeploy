@@ -27,9 +27,9 @@ pipeline {
         }
         stage('Deploy to Production') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'webserver_cred', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'webserver-ssh', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'user')])  {
                     script {
-                        sh 'ssh $user@52.90.0.221 -p $pass "docker pull kobaka123/train-schedule:latest; docker run --restart-always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
+                        sh 'ssh $user@52.90.0.221 -i $key "docker pull kobaka123/train-schedule:latest; docker run --restart-always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
                     }
                 }
             }
