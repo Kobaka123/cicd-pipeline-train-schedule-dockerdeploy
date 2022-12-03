@@ -20,8 +20,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
                         app.push 'latest'
-                        app.push '${env.BUILD_NUMBER}'
-                    }
+                                            }
                 }
             }
         }
