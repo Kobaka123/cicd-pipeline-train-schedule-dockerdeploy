@@ -10,7 +10,9 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-                app = docker.build 'Kobaka123/train-schedule'
+                script {
+                    app = docker.build 'Kobaka123/train-schedule'
+                }
             }
         }
     }
