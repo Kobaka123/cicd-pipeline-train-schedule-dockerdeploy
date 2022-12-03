@@ -15,5 +15,14 @@ pipeline {
                 }
             }
         }
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://hub.docker.com/', 'DokerHub')
+                    app.push 'latest'
+                    app.push '${env.BUILD_TAG}'
+                }
+            }
+        }
     }
 }
