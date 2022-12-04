@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {                
                 script {
-                    sh "ssh -tt -o StrictHostKeyChecking=no deploy@34.205.55.110 -i /var/lib/jenkins/.ssh/id_rsa"
+                    sh 'ssh -o StrictHostKeyChecking=no deploy@34.205.55.110 -i /var/lib/jenkins/.ssh/id_rsa "docker pull kobaka123/train-schedule:latest; docker run --restart always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
                     }
                 
             }
