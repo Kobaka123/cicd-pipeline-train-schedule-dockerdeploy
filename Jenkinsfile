@@ -26,12 +26,11 @@ pipeline {
             }
         }
         stage('Deploy to Production') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'webserver-ssh', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'user')])  {
-                    script {
-                        sh "sudo ssh deploy@3.95.240.140 -i /var/lib/jenkins/.ssh/id_rsa \"docker pull kobaka123/train-schedule:latest; docker run --restart-always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest\""
+            steps {                
+                script {
+                    sh "sudo ssh deploy@3.95.240.140 -i /var/lib/jenkins/.ssh/id_rsa"
                     }
-                }
+                
             }
         }
     }
