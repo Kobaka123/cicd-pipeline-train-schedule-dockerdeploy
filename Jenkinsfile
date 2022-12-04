@@ -36,7 +36,7 @@ pipeline {
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker run --restart always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:\""
+                        sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker run --restart always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest\""
                     }  
                 }              
             }
