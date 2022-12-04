@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {                
                 script {
-                    sh "sudo ssh deploy@3.95.240.140 -i /var/lib/jenkins/.ssh/id_rsa"
+                    sh "ssh deploy@34.205.55.110 -i /var/lib/jenkins/.ssh/id_rsa"
                     }
                 
             }
