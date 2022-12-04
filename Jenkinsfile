@@ -26,11 +26,19 @@ pipeline {
             }
         }
         stage('Deploy to Production') {
-            steps {                
-                script {
-                    sh 'ssh -o StrictHostKeyChecking=no deploy@34.205.55.110 -i /var/lib/jenkins/.ssh/id_rsa "docker pull kobaka123/train-schedule:latest; docker run --restart always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:latest"'
-                    }
-                
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-user-key', keyFileVariable: 'key', passphraseVariable: '', usernameVariable: 'user')]) {
+                    script {
+                        sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker pull kobaka123/train-schedule:latest\""
+                        try {
+                            sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker stop train-schedule\""
+                            sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker rm train-schedule\""
+                        } catch (err) {
+                            echo: 'caught error: $err'
+                        }
+                        sh "ssh -o StrictHostKeyChecking=no '$user'@34.205.55.110 -i '$key' \"docker run --restart always --name train-schedule -p 8080:8080 -d kobaka123/train-schedule:\""
+                    }  
+                }              
             }
         }
     }
